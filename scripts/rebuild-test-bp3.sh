@@ -22,6 +22,15 @@ git clone https://github.com/untillpro/airs-bp3
 # go to airs-bp3 repo folder
 cd airs-bp3
 
+if [[ "$schemas" == "rebuild" ]]; then 
+  go build -o airs-bp airsbp3/cli/*.go
+  ./airs-bp baseline_schemas airsbp3/baseline_schemas
+  git add .
+  git commit -m "baseline schemas update"
+  git push
+  exit 0
+fi
+
 go env -w GOSUMDB=off
 echo "gh_event: $gh_event"
 if [[ "$gh_event" == "push" ]]; then 
@@ -43,7 +52,12 @@ else
   echo "airs-pb3 will be tested now..."
   # run tests
   go test -race ./...
+  status=$? 
+  if [ $status -ne 0 ]; then
+    exit 1
+  fi
   if [[ "$gh_event" == "push" ]];then 
     echo "Push new version of $reponame to git"
   fi
 fi
+
