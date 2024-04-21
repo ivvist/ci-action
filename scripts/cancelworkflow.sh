@@ -3,9 +3,10 @@
 rp=${repo}
 br=${branch}
 wf=${runningworkflow}
+echo "workflow1: $runningworkflow"
 echo "repo: ${rp}"
 echo "branch: ${br}"
-echo "workflow: ${wf}"
+echo "workflow2: ${wf}"
 
 # Declare an array to hold the workflow details
 declare -a workflows=()
