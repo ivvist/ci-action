@@ -33,11 +33,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    # Install Go 
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
         go-version: 'stable'
         cache: false
+
+    # Install TinyGo 
+    - name: Install TinyGo
+      run: |
+        wget https://github.com/tinygo-org/tinygo/releases/download/v0.32.0/tinygo_0.32.0_amd64.deb
+        sudo dpkg -i tinygo_0.34.0_amd64.deb
 
     - name: Check pull request file size
       if: github.event_name == 'pull_request'
